@@ -1,36 +1,67 @@
 module.exports = function multiply(first, second) {
-  let first = first.split("").reverse()
-  let second = second.split("").reverse()
-  let arr = []
-  for(let i=0; i<first.length; i++) {
-    let tmp = []
-    for(let k=0; k<i; k++) {
-      tmp.push(0)
+    function reverse( str ) {
+        var temp = '';
+        for ( var i = str.length - 1 ; i >= 0 ; i-- )
+            temp += str[i];
+        return temp;
     }
-    for(let j=0; j<second.length; j++) {
-      tmp.push(first[i]*last[j])
+    function sum_long( x , y ){
+        var overflow = 0;
+        var temp = '';
+        if ( x.length < y.length )
+        {
+            var tmp = x;
+            x = y;
+            y = tmp;
+        }
+        while ( x.length != y.length)
+        {
+            y += '0';
+        }
+        for ( var i = 0 ; i < y.length ; i ++ )
+        {
+            var number = ( +x[i] + +y[i] + overflow ) % 10 ;
+            overflow = Math.floor( ( +x[i] + +y[i] + overflow ) / 10 );
+            temp += number ;
+        }
+        if ( overflow > 0 )
+            temp += overflow;
+        return temp;
     }
-    arr.push(tmp)
-  }
-  arr.reverse()
-  for(let i=1; i<arr.length; i++) {
-    for(let j=0; j<arr[i].length; j++) {
-      arr[0][j] += arr[i][j]
+
+    function mult_long( x , y) {
+        var str = '';
+        var zeros = '';
+        var overflow = 0;
+        var temp = '';
+
+        for ( var i = 0; i < y.length; i++ ) {
+            str = '';
+            str = zeros;
+            zeros += 0;
+
+            for ( var j = 0; j < x.length; j++ ) {
+                var number = ( ( +y[i] * +x[j] ) + overflow ) % 10;
+                overflow = Math.floor(( +y[i] * +x[j] + overflow) / 10);
+                str += number;
+            }
+            if (overflow > 0)
+                str += overflow;
+
+            overflow = 0;
+            temp = sum_long(temp, str);
+        }
+        return temp;
     }
-  }
-  arr = arr[0]
-  for(let i=0; i<arr.length; i++) {
-    let tmp = arr[i]
-    if(tmp > 9) {
-      if(i == arr.length-1) {
-        arr[i] = tmp % 10
-        arr.push((tmp - tmp % 10) / 10)
-      }
-      else {
-        arr[i] = tmp % 10
-        arr[i+1] += (tmp - tmp % 10) / 10
-      }
+    if ( first.length < second.length )
+    {
+        var tmp = first;
+        first = second;
+        second = tmp;
     }
-  }
-  return arr.reverse().join('')
+    first = reverse( first );
+    second = reverse( second );
+    return  reverse( mult_long( first , second ) );
 }
+
+
