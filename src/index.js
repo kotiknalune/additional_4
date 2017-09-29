@@ -5,7 +5,7 @@ module.exports = function multiply(first, second) {
             temp += str[i];
         return temp;
     }
-    function sum_long( x , y ){
+    function summa( x , y ){
         var overflow = 0;
         var temp = '';
         if ( x.length < y.length )
@@ -26,15 +26,14 @@ module.exports = function multiply(first, second) {
         }
         if ( overflow > 0 )
             temp += overflow;
+
         return temp;
     }
-
-    function mult_long( x , y) {
+    function multi( x , y) {
         var str = '';
         var zeros = '';
         var overflow = 0;
         var temp = '';
-
         for ( var i = 0; i < y.length; i++ ) {
             str = '';
             str = zeros;
@@ -49,7 +48,7 @@ module.exports = function multiply(first, second) {
                 str += overflow;
 
             overflow = 0;
-            temp = sum_long(temp, str);
+            temp = summa(temp, str);
         }
         return temp;
     }
@@ -61,7 +60,6 @@ module.exports = function multiply(first, second) {
     }
     first = reverse( first );
     second = reverse( second );
-    return  reverse( mult_long( first , second ) );
+
+    return  reverse( multi( first , second ) );
 }
-
-
